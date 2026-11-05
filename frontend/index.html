@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARC Audit Dashboard</title>
+<link rel="stylesheet" href="/static/css/style.css">
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --border: #334155;
+    --accent: #38bdf8;
+    --green: #4ade80;
+    --red: #f87171;
+    --orange: #fb923c;
+    --purple: #c084fc;
+  }
+  body { background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, sans-serif; margin: 0; padding: 0; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+  header { text-align: center; margin-bottom: 20px; }
+  header h1 { margin: 0; font-size: 1.8rem; }
+  header p { color: var(--muted); margin: 6px 0 0; font-size: 0.9rem; }
+
+  .status-bar { padding: 10px 16px; border-radius: 8px; margin-bottom: 16px; font-size: 0.85rem; font-weight: 500; }
+  .status-warn { background: #451a03; color: #fbbf24; }
+  .status-ok { background: #064e3b; color: #34d399; }
+  .status-error { background: #450a0a; color: #f87171; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  .tab {
+    padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--card); color: var(--muted); cursor: pointer; font-size: 0.9rem;
+  }
+  .tab.active { background: var(--accent); color: #0f172a; font-weight: 600; border-color: var(--accent); }
+  .tab:hover { color: var(--text); }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
+  .stat-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px; text-align: center;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .stat-value { font-size: 2rem; font-weight: 700; }
+  .stat-blue { color: var(--accent); }
+  .stat-green { color: var(--green); }
+  .stat-orange { color: var(--orange); }
+  .stat-purple { color: var(--purple); }
+
+  .card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 20px; margin-bottom: 20px;
+  }
+  .card h3 { margin-top: 0; font-size: 1.1rem; color: var(--text); }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  .data-table th, .data-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table th { color: var(--muted); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+  .data-table tr:hover { background: rgba(255,255,255,0.03); }
+  .data-table code {
+    background: #0f172a; padding: 2px 6px; border-radius: 4px; font-family: ui-monospace, monospace; font-size: 0.8rem;
+  }
+
+  textarea {
+    width: 100%; min-height: 200px; background: #0f172a; color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 12px; font-family: ui-monospace, monospace;
+    font-size: 0.85rem; resize: vertical; box-sizing: border-box;
+  }
+
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .btn {
+    padding: 8px 16px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--card); color: var(--text); cursor: pointer; font-size: 0.85rem;
+  }
+  .btn:hover { background: #334155; }
+  .btn-blue { background: #0369a1; border-color: #0369a1; color: white; }
+  .btn-blue:hover { background: #075985; }
+  .btn-green { background: #15803d; border-color: #15803d; color: white; }
+  .btn-green:hover { background: #166534; }
+  .btn-secondary { background: transparent; }
+
+  .upload-zone {
+    border: 2px dashed var(--border); border-radius: 10px; padding: 24px; text-align: center;
+    cursor: pointer; color: var(--muted); transition: all 0.2s;
+  }
+  .upload-zone:hover { border-color: var(--accent); color: var(--text); }
+
+  .grid-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 16px; }
+  .grid-box h4 { margin: 0 0 10px; color: var(--muted); font-size: 0.85rem; }
+
+  footer { text-align: center; color: var(--muted); font-size: 0.8rem; margin-top: 40px; padding-bottom: 20px; }
+
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .grid-wrap { grid-template-columns: 1fr; }
+    .tabs { gap: 6px; }
+    .tab { padding: 6px 10px; font-size: 0.8rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>🔬 ARC Audit Dashboard</h1>
+  <p>Abstraction Cliff + Emergence Audit — Phase A & B Analysis + Live Solver</p>
+</header>
+
+<div id="statusBar" class="status-bar status-warn">
+  <span>⏳ Checking backend connection...</span>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+  <button class="tab" onclick="showTab('phaseA')">📉 Phase A</button>
+  <button class="tab" onclick="showTab('phaseB')">🎯 Phase B</button>
+  <button class="tab" onclick="showTab('tasks')">📋 Tasks</button>
+  <button class="tab" onclick="showTab('solver')">🧪 Live Solver</button>
+  <button class="tab" onclick="showTab('upload')">📤 Upload Data</button>
+</div>
+
+<!-- ========== DASHBOARD ========== -->
+<div id="dashboard" class="section active">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Tasks</div>
+      <div class="stat-value stat-blue" id="dashTasks">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Categories</div>
+      <div class="stat-value stat-green" id="dashCats">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Solvers</div>
+      <div class="stat-value stat-orange" id="dashSolvers">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Cache Predictions</div>
+      <div class="stat-value stat-purple" id="dashCache">—</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📈 Quick Stats</h3>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Value</th></tr>
+      </thead>
+      <tbody id="dashStats">
+        <tr><td colspan="2" style="color:var(--muted)">Loading...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ========== PHASE A ========== -->
+<div id="phaseA" class="section">
+  <div class="card">
+    <h3>📉 Phase A: Cross-Version Drop Analysis</h3>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem">
+      Compare v1 vs v2 performance across all solvers. Drop = v1 minus v2, so a positive drop means v2 is harder (abstraction cliff) and a negative drop means v2 scored higher. Verdict threshold: 0.05.
+    </p>
+    <div id="phaseAContent">
+      <p style="color:var(--muted)">Loading analysis...</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PHASE B ========== -->
+<div id="phaseB" class="section">
+  <div class="card">
+    <h3>🎯 Phase B: Category Decomposition</h3>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem">
+      Performance breakdown by task category (Colour Mapping, Spatial Relations, etc.)
+    </p>
+    <div id="phaseBContent">
+      <p style="color:var(--muted)">Loading analysis...</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TASKS ========== -->
+<div id="tasks" class="section">
+  <div class="card">
+    <h3>📋 Task Browser</h3>
+    <input type="text" id="taskFilter" placeholder="🔍 Filter by task ID, category, or solver..."
+           style="width:100%;padding:10px 14px;margin-bottom:1rem;border-radius:8px;border:1px solid var(--border);background:#0f172a;color:var(--text);font-size:0.9rem;box-sizing:border-box;"
+           oninput="filterTasks()">
+    <div id="tasksContent">
+      <p style="color:var(--muted)">Loading tasks...</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== LIVE SOLVER ========== -->
+<div id="solver" class="section">
+  <div class="card">
+    <h3>🧪 Live ARC Solver</h3>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem">
+      Enter an ARC task JSON. The system will first check NVIDIA cache, then run rule-based strategies.
+    </p>
+    <textarea id="taskInput" spellcheck="false">{
+  "task_id": "demo_symmetry",
+  "train": [
+    {"input": [[0,0,0],[0,1,0],[0,0,0]], "output": [[0,0,0],[0,1,0],[0,0,0]]},
+    {"input": [[2,0],[0,0]], "output": [[2,0],[0,0]]}
+  ],
+  "test": [
+    {"input": [[0,0,0,0],[0,2,2,0],[0,2,2,0],[0,0,0,0]]}
+  ]
+}</textarea>
+    <div class="actions">
+      <button class="btn btn-blue" id="solveBtn" onclick="solveTask()">▶️ Solve Task</button>
+      <button class="btn btn-green" onclick="solveAllStrategies()">🔁 Run All Strategies</button>
+      <button class="btn btn-secondary" onclick="loadDemoTask()">📋 Load Demo</button>
+      <button class="btn btn-secondary" onclick="clearTask()">🗑️ Clear</button>
+    </div>
+  </div>
+
+  <div id="solverOutput" class="card" style="margin-top:16px;display:none">
+    <h3>📊 Results</h3>
+    <div id="solverResultBody"></div>
+  </div>
+</div>
+
+<!-- ========== UPLOAD ========== -->
+<div id="upload" class="section">
+  <div class="card">
+    <h3>📤 Upload NVIDIA Data</h3>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem">
+      Upload the files extracted from your NVIDIA server to enable full analysis.
+    </p>
+
+    <div style="margin-bottom:1.5rem">
+      <h4 style="margin-bottom:0.5rem">1. Cache (arc_cache_compact.json)</h4>
+      <div class="upload-zone" onclick="document.getElementById('cacheUpload').click()">
+        <p>📂 Click or drag cache_compact.json here</p>
+        <input type="file" id="cacheUpload" accept=".json" style="display:none" onchange="handleCacheUpload(event)">
+      </div>
+      <div id="cacheUploadStatus"></div>
+    </div>
+
+    <div style="margin-bottom:1.5rem">
+      <h4 style="margin-bottom:0.5rem">2. Scores (all_scores.csv)</h4>
+      <div class="upload-zone" onclick="document.getElementById('scoresFile').click()">
+        <p>📂 Click or drag all_scores.csv here</p>
+        <input type="file" id="scoresFile" accept=".csv" style="display:none" onchange="uploadFile(this, 'scores')">
+      </div>
+      <div id="scoresUploadStatus"></div>
+    </div>
+
+    <div>
+      <h4 style="margin-bottom:0.5rem">3. Labels (labels.json)</h4>
+      <div class="upload-zone" onclick="document.getElementById('labelsFile').click()">
+        <p>📂 Click or drag labels.json here</p>
+        <input type="file" id="labelsFile" accept=".json" style="display:none" onchange="uploadFile(this, 'labels')">
+      </div>
+      <div id="labelsUploadStatus"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>💻 NVIDIA Extraction Guide</h3>
+    <p style="color:var(--muted);font-size:0.85rem;margin-bottom:1rem">
+      Run this on your NVIDIA Jupyter before the server expires:
+    </p>
+    <pre style="background:#0f172a;padding:1rem;border-radius:8px;overflow-x:auto;font-size:0.8rem;border:1px solid var(--border)"><code>import json, glob, os
+
+files = glob.glob('/root/arc_audit/outputs/*.json')
+cache = {}
+for f in files:
+    try:
+        with open(f) as fp:
+            d = json.load(fp)
+        fname = os.path.basename(f)[:-5]
+        parts = fname.split('_')
+        task_id = parts[-1]
+        version = parts[-2]
+        solver = '_'.join(parts[:-2])
+        cache[f"{solver}_{version}_{task_id}"] = {
+            "task_id": task_id, "version": version,
+            "solver": solver, "pred": d.get('pred', []), "gt": d.get('gt', [])
+        }
+    except: pass
+
+with open('/workspace/arc_cache_compact.json', 'w') as f:
+    json.dump(cache, f)
+print(f"Extracted {len(cache)} predictions")
+</code></pre>
+  </div>
+</div>
+
+<footer>
+  ARC Audit Project — Phase A/B Analysis + Live Solver | FastAPI + Vanilla JS
+</footer>
+
+</div>
+
+<script src="/static/js/app.js?v=4"></script>
+</body>
+</html>

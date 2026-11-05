@@ -1,0 +1,299 @@
+{
+  "labels": {
+    "0934a4d8": {
+      "human_6cat": "Counting",
+      "kimi_code": "D",
+      "verified": true
+    },
+    "0a1d4ef5": {
+      "human_6cat": "Compositional Chaining",
+      "kimi_code": "I",
+      "verified": true
+    },
+    "0c9aba6e": {
+      "human_6cat": "Compositional Chaining",
+      "kimi_code": "I",
+      "verified": true
+    },
+    "17cae0c1": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": true
+    },
+    "212895b5": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": true
+    },
+    "21897d95": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "D",
+      "verified": true
+    },
+    "221dfab4": {
+      "human_6cat": "Colour Mapping",
+      "kimi_code": "C",
+      "verified": true
+    },
+    "2b83f449": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "G",
+      "verified": true
+    },
+    "3194b014": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": true
+    },
+    "4b6b68e5": {
+      "human_6cat": "Colour Mapping",
+      "kimi_code": "G",
+      "verified": true
+    },
+    "4c3d4a41": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": true
+    },
+    "5961cc34": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": true
+    },
+    "705a3229": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": true
+    },
+    "71e489b6": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": true
+    },
+    "89565ca0": {
+      "human_6cat": "Counting",
+      "kimi_code": "D",
+      "verified": true
+    },
+    "99306f82": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": true
+    },
+    "d017b73f": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": true
+    },
+    "db0c5428": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": true
+    },
+    "e376de54": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": true
+    },
+    "f9d67f8b": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": true
+    },
+    "1c02dbbe": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "1acc24af": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "ca8f78db": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "e87109e9": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "e9bb6954": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "ac0c5833": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "2c737e39": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "58f5dbd5": {
+      "human_6cat": "Compositional Chaining",
+      "kimi_code": "K",
+      "verified": false
+    },
+    "7b0280bc": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "45a5af55": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "c6e1b8da": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "3a25b0d8": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "dd6b8c4b": {
+      "human_6cat": "Colour Mapping",
+      "kimi_code": "C",
+      "verified": false
+    },
+    "ac605cbb": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "38007db0": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "31d5ba1a": {
+      "human_6cat": "Compositional Chaining",
+      "kimi_code": "I",
+      "verified": false
+    },
+    "8719f442": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "J",
+      "verified": false
+    },
+    "9385bd28": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "cb2d8a2c": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "20a9e565": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "b1fc8b8e": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "65b59efc": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "e681b708": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "fc754716": {
+      "human_6cat": "Colour Mapping",
+      "kimi_code": "G",
+      "verified": false
+    },
+    "7b3084d4": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "319f2597": {
+      "human_6cat": "Counting",
+      "kimi_code": "D",
+      "verified": false
+    },
+    "eee78d87": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "16b78196": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "981571dc": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "95a58926": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "7491f3cf": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "90347967": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "df8cc377": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "edb79dae": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "2ba387bc": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "5dbc8537": {
+      "human_6cat": "Object Persistence",
+      "kimi_code": "A",
+      "verified": false
+    },
+    "e619ca6e": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    },
+    "351d6448": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "E",
+      "verified": false
+    },
+    "917bccba": {
+      "human_6cat": "Spatial Relations",
+      "kimi_code": "F",
+      "verified": false
+    }
+  }
+}
